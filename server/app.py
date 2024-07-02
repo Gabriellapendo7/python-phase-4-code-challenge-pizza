@@ -76,11 +76,11 @@ def get_pizzas():
 def assign_restaurant_pizzas():
     data = request.get_json()
     
-    # Check if all required fields are present in the request
+    
     if not data or "pizza_id" not in data or "restaurant_id" not in data or "price" not in data:
         return jsonify({"error": "Validation failed. Missing pizza_id, restaurant_id, or price in request."}), 400
     
-    # Convert relevant data to integers and validate price range
+
     try:
         pizza_id = int(data["pizza_id"])
         restaurant_id = int(data["restaurant_id"])
@@ -88,18 +88,17 @@ def assign_restaurant_pizzas():
     except ValueError:
         return jsonify({"error": "Validation failed. Invalid data types for pizza_id, restaurant_id, or price."}), 400
     
-    # Validate price range
+    
     if not (1 <= price <= 30):
         return jsonify({"error": "Validation failed. Price must be between 1 and 30."}), 400
     
-    # Check if Pizza and Restaurant exist
     pizza = Pizza.query.get(pizza_id)
     restaurant = Restaurant.query.get(restaurant_id)
     
     if not pizza or not restaurant:
         return jsonify({"error": "Validation failed. Pizza or Restaurant not found."}), 400
     
-    # Create and save new RestaurantPizza entry
+    
     new_rp = RestaurantPizza(
         price=price,
         restaurant_id=restaurant_id,
@@ -109,7 +108,7 @@ def assign_restaurant_pizzas():
     db.session.add(new_rp)
     db.session.commit()
     
-    # Return the newly created entry in JSON format
+    
     return jsonify({
         "id": new_rp.id,
         "pizza": {
