@@ -14,7 +14,7 @@ class Restaurant(db.Model, SerializerMixin):
     # Relationship with RestaurantPizza
     restaurant_pizza = db.relationship('RestaurantPizza', back_populates='restaurant', cascade='all, delete-orphan')
 
-    # Serialization rules
+   
     serialize_rules = ('-restaurant_pizza.restaurant',)
 
     def __repr__(self):
