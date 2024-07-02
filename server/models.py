@@ -48,7 +48,7 @@ class RestaurantPizza(db.Model, SerializerMixin):
     restaurant = db.relationship('Restaurant', back_populates='restaurant_pizza')
     pizza = db.relationship('Pizza', back_populates='restaurant_pizza')
 
-    # Serialization rules
+    
     serialize_rules = ('-pizza.restaurant_pizza', '-restaurant.restaurant_pizza',)
 
     # Validation for price attribute
